@@ -7,14 +7,14 @@ const bannerItems = [
     id: 1,
     title: "erqw",
     description: "rqw",
-    img: "/assets/banners/jr-startup.png",
+    img: "https://res.cloudinary.com/ducr0o0wa/image/upload/v1772301372/jr-startup_qkqt81.png",
     route: "/post/137",
   },
   {
     id: 2,
     title: "",
     description: "",
-    img: "/assets/banners/jr-talent.png",
+    img: "https://res.cloudinary.com/ducr0o0wa/image/upload/v1772301374/jr-talent_oj4xml.png",
     route: "/post/141",
   },
 //   {
