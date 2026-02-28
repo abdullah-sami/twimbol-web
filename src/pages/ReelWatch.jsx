@@ -109,11 +109,12 @@ function ReelSlide({
   onOpenDescription,
   sidePanelOpen,
   activeSidePanel,
+  muted,
+  onMuteToggle,
 }) {
   const videoRef = useRef(null);
   const progressRef = useRef(null);
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -123,9 +124,7 @@ function ReelSlide({
   const [buffering, setBuffering] = useState(false);
   const [showHeart, setShowHeart] = useState(false);
   const lastTapRef = useRef(0);
-  const [followed, setFollowed] = useState(reel.user_profile?.followed_by_user || false);
-
-  console.log("Rendering ReelSlide", reel);
+  const [followed, setFollowed] = useState(reel.user_profile?.user?.followed_by_user || false);
 
   const handleFollow = async () => {
     const next = !followed;
@@ -316,7 +315,7 @@ function ReelSlide({
         </button>
 
         {/* Mute */}
-        <button className="reel-action-btn" onClick={() => setMuted((m) => !m)}>
+        <button className="reel-action-btn" onClick={onMuteToggle}>
           <div className="reel-action-icon">
             {muted ? (
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -422,6 +421,7 @@ export default function ReelWatch() {
   const [sidePanel, setSidePanel] = useState(null);
   const [likedMap, setLikedMap] = useState({});
   const [likeCountMap, setLikeCountMap] = useState({});
+  const [muted, setMuted] = useState(false); // persists across reels
 
   const stackRef = useRef(null);
   const touchStartY = useRef(null);
@@ -556,6 +556,25 @@ export default function ReelWatch() {
     }
     touchStartY.current = null;
   };
+
+  // ── Block pull-to-refresh on mobile ───────────────────────────────────────
+  // We must use a non-passive touchmove listener on the player element so we
+  // can call preventDefault() and stop the browser's native PTR gesture.
+  const onTouchMove = useCallback((e) => {
+    // Only block vertical swipes (the ones that would trigger PTR)
+    if (touchStartY.current === null) return;
+    const dy = e.touches[0].clientY - touchStartY.current;
+    // If scrolling up (dy > 0) at the top → block PTR; also block downward to keep our handler in control
+    e.preventDefault();
+  }, []);
+
+  useEffect(() => {
+    const el = stackRef.current;
+    if (!el) return;
+    // { passive: false } is required to be able to call preventDefault()
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => el.removeEventListener("touchmove", onTouchMove);
+  }, [onTouchMove]);
 
   // ── Wheel scroll (desktop) ─────────────────────────────────────────────────
   const wheelAccum = useRef(0);
@@ -721,6 +740,8 @@ export default function ReelWatch() {
               onOpenDescription={() => setSidePanel(sidePanel === "description" ? null : "description")}
               sidePanelOpen={!!sidePanel}
               activeSidePanel={sidePanel}
+              muted={muted}
+              onMuteToggle={() => setMuted((m) => !m)}
             />
 
             {/* Three-dot menu */}
@@ -815,6 +836,7 @@ const CSS = `
     color: #fff;
     overflow: hidden;
     position: relative;
+    overscroll-behavior: none;
   }
 
   /* ── Back button ── */
@@ -843,6 +865,8 @@ const CSS = `
     height: 100dvh;
     overflow: hidden;
     transition: flex 0.3s ease;
+    touch-action: none; /* blocks browser pull-to-refresh & native scroll handling */
+    overscroll-behavior: none;
   }
   .rw-player-col.panel-open { flex: 0 0 min(52vw, 460px); }
 
