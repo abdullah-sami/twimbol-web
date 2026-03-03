@@ -7,6 +7,7 @@ import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 // import ForgotPassword from './pages/ForgotPassword'
+import Outgoing from './pages/Outgoing'
 
 // // Protected Pages
 import Home from './pages/Home'
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/login" element={<CheckLogin><Login /></CheckLogin>} />
         <Route path="/signup" element={<CheckLogin><Signup /></CheckLogin>} />
         {/* <Route path="/forgot-password" element={<CheckLogin><ForgotPassword /></CheckLogin>} /> */}
+        <Route path="/outgoing/" element={<Outgoing />} />
 
         {/* Protected */}
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />

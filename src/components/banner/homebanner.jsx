@@ -3,19 +3,20 @@ import { useNavigate } from "react-router-dom";
 
 // simple array of banner data; add/adjust as necessary
 const bannerItems = [
+  // {
+  //   id: 1,
+  //   title: "erqw",
+  //   description: "rqw",
+  //   img: "https://res.cloudinary.com/ducr0o0wa/image/upload/v1772301372/jr-startup_qkqt81.png",
+  //   route: "",
+  // },
   {
     id: 1,
-    title: "erqw",
-    description: "rqw",
-    img: "https://res.cloudinary.com/ducr0o0wa/image/upload/v1772301372/jr-startup_qkqt81.png",
-    route: "/post/137",
-  },
-  {
-    id: 2,
     title: "",
     description: "",
     img: "https://res.cloudinary.com/ducr0o0wa/image/upload/v1772301374/jr-talent_oj4xml.png",
-    route: "/post/141",
+    route: "/outgoing/",
+    param: "https://docs.google.com/forms/d/e/1FAIpQLSc0B5tZee_81l2a2IGmVbs3bHyD8FPkb0gaby6l6lNtqYWA6g/viewform",
   },
 //   {
 //     id: 3,
@@ -38,11 +39,15 @@ export const HomeBanner = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleClick = (route) => {
-    navigate(route);
+
+
+  const handleClick = (route, param) => {
+
+    navigate(route, { state: { link: param } });
+
   };
 
-  const { title, description, img, route } = bannerItems[current];
+  const { title, description, img, route, param } = bannerItems[current];
 
   return (
     <>
@@ -59,7 +64,7 @@ export const HomeBanner = () => {
         // backgroundColor: "#000",
         boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
       }}
-      onClick={() => handleClick(route)}
+      onClick={() => handleClick(route, param)}
     >
       <img
         src={img}

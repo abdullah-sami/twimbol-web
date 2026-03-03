@@ -128,7 +128,7 @@ function ReelSlide({
   const [followed, setFollowed] = useState(reel.user_profile?.followed_by_user || false);
   const viewRecorded = useRef(false);
 
-  console.log(reel.user_profile?.followed_by_user)
+  
 
   const handleFollow = async () => {
     const next = !followed;
