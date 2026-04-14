@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import CheckLogin from './components/auth/CheckLogin'
+// import { SpeedInsights } from "@vercel/speed-insights/next"
 
 // Public Pages
 import Landing from './pages/Landing'
