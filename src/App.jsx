@@ -8,6 +8,8 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 // import ForgotPassword from './pages/ForgotPassword'
 import Outgoing from './pages/Outgoing'
+import ChildSafetyDeclaration from './pages/ChildSafetyDeclaration'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 
 // // Protected Pages
 import Home from './pages/Home'
@@ -33,6 +35,8 @@ export default function App() {
         <Route path="/signup" element={<CheckLogin><Signup /></CheckLogin>} />
         {/* <Route path="/forgot-password" element={<CheckLogin><ForgotPassword /></CheckLogin>} /> */}
         <Route path="/outgoing/" element={<Outgoing />} />
+        <Route path="/child-safety" element={<ChildSafetyDeclaration />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         {/* Protected */}
         <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />

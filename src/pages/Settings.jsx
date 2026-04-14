@@ -91,7 +91,7 @@ function PrivacyPolicy() {
       <p className="text-txt-secondary text-sm max-w-2xl">
         Twimbol respects your privacy. We collect minimal data necessary to
         operate the platform and never sell your personal information. For full
-        details, visit our <a href="https://rafidabdullahsamiweb.pythonanywhere.com/privacy-policy" className="text-brand hover:underline">website</a>.
+        details, visit this <a href="/privacy-policy" className="text-brand hover:underline">page</a>.
       </p>
     </div>
   );
