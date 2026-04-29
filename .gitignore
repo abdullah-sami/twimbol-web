@@ -22,4 +22,11 @@ public/assets
 *.njsproj
 *.sln
 *.sw?
+
+# Environment 
 *.env
+
+
+
+
+README.md
